@@ -16,6 +16,8 @@
 
 ## 1.UE插件安装与基础配置
 
+## 1.1 安装
+
 在Edit->Plugins里，搜索并安装"**Pixel Streaming**"像素流插件，勾选Enable。重启UE后，即安装好了像素流插件。
 
 >**特别的**  
@@ -24,6 +26,18 @@
 ![alt text](image-1.png)
 
 后续，按正常流程打包程序，*(UE4.27)* File->Package Project->Windows(64-bit) / *(UE5.1)* Files->Package Project ->Windows ->Windows(64-bit)，得到打包好的文件
+
+## 1.2 设置渲染和推流的分辨率
+
+可以直接按"~"输入控制台指令，或在蓝图中使用```Execute Console Command```节点以输入控制台指令，```从Event Begin Play```节点接入以调用。更推荐后者，因为更方便后续调整。  
+![alt text](image-3.png)  
+按顺序输入指令  
+```r.SetRes 1920x1080```：调整渲染分辨率，以{width}x{height}的形式；  
+```PixelStreaming.Capturer.UseBackBufferSize false```：编码器使用后台缓冲区大小  
+```PixelStreaming.WebRTC.DisableResolutionChange false```：允许调整像素流分辨率；  
+```PixelStreaming.Capturer.CaptureSize 1920x1080```：调整视频流分辨率，以{width}x{height}的形式。  
+一般而言，渲染分辨率应当大于等于视频流分辨率。降低视频流分辨率可以监督网络传输所需网速。  
+当然，即便蓝图里已经记录了，也只是启动时会被配置，后续可以再在控制台中配置
 
 ## 2.最基础的测试
 
