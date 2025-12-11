@@ -58,11 +58,14 @@
 > *(UE5)* .\项目名\Samples\PixelStreaming\WebServers\SignallingWebServer\platform_scripts\cmd\setup.bat  
 
 安装完成后，可以调用与上述文件同文件夹中的```Start_SignallingServer.ps1```以启动像素流服务器。  
-为了方便后续调用并修改参数，建议编写powershell脚本打开该文件。在游戏启动程序同文件夹下新建文件 ```StartSignallingWebServer.ps1```，内容为上述文件路径，以UE4为例：  
+为了方便后续调用并修改参数，建议编写powershell脚本打开该文件。在游戏启动程序同文件夹下新建文件 ```Run_Start_SignallingServer.bat```，以UE5为例：  
+<img width="733" height="324" alt="image" src="https://github.com/user-attachments/assets/4f301630-405f-4bc1-903d-5b5627316470" />
 
-``` powershell
-# StartSignallingWebServer.ps1
-Samples\PixelStreaming\WebServers\SignallingWebServer\platform_scripts\cmd\Start_SignallingServer.ps1
+``` cmd
+@echo off
+powershell -ExecutionPolicy Bypass -File ".\[ProjectName]\Samples\PixelStreaming\WebServers\SignallingWebServer\platform_scripts\cmd\Start_SignallingServer.ps1"
+pause
+
 ```
 
 ### 2.2 配置游戏主程序的运行参数
