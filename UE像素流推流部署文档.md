@@ -25,8 +25,6 @@
 >当用户使用虚拟摇杆控制时，需要在原本进行电脑键鼠的操作的地方加入上述使用的Touch Interface Setup中对应的Input Key输入，例如默认的Gamepad Left Thumbstick X-Axis。  
 ![alt text](image-1.png)
 
-后续，按正常流程打包程序，*(UE4.27)* File->Package Project->Windows(64-bit) / *(UE5.1)* Files->Package Project ->Windows ->Windows(64-bit)，得到打包好的文件
-
 ## 1.2 设置渲染和推流的分辨率
 
 可以直接按"~"输入控制台指令，或在蓝图中使用```Execute Console Command```节点以输入控制台指令，```从Event Begin Play```节点接入以调用。更推荐后者，因为更方便后续调整。  
@@ -39,10 +37,17 @@
 一般而言，渲染分辨率应当大于等于视频流分辨率。降低视频流分辨率可以监督网络传输所需网速。  
 当然，即便蓝图里已经记录了，也只是启动时会被配置，后续可以再在控制台中配置
 
+## 1.3 打包
+
+后续，按正常流程打包程序，*(UE4.27)* File->Package Project->Windows(64-bit) / *(UE5.1)* Files->Package Project ->Windows ->Windows(64-bit)，得到打包好的文件
+
 ## 2.最基础的测试
 
 ### 2.1 安装像素流信令服务器SignallingWebServer
 
+先获取像素流的服务相关包：
+> *(UE4)* .\Samples\PixelStreaming\WebServers\get_ps_servers.bat  
+> *(UE5)* .\项目名\Samples\PixelStreaming\WebServers\get_ps_servers.bat  
 运行下述文件以安装信令服务器:  
 > *(UE4)* .\Samples\PixelStreaming\WebServers\SignallingWebServer\platform_scripts\cmd\setup.ps1  
 > *(UE5)* .\项目名\Samples\PixelStreaming\WebServers\SignallingWebServer\platform_scripts\cmd\setup.ps1  
