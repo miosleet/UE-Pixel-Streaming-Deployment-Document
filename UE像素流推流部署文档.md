@@ -47,7 +47,8 @@
 
 先获取像素流的服务相关包：
 > *(UE4)* .\Samples\PixelStreaming\WebServers\get_ps_servers.bat  
-> *(UE5)* .\项目名\Samples\PixelStreaming\WebServers\get_ps_servers.bat  
+> *(UE5)* .\项目名\Samples\PixelStreaming\WebServers\get_ps_servers.bat
+
 运行下述文件以安装信令服务器:  
 > *(UE4)* .\Samples\PixelStreaming\WebServers\SignallingWebServer\platform_scripts\cmd\setup.ps1  
 > *(UE5)* .\项目名\Samples\PixelStreaming\WebServers\SignallingWebServer\platform_scripts\cmd\setup.ps1  
