@@ -45,13 +45,17 @@
 
 ### 2.1 安装像素流信令服务器SignallingWebServer
 
-先获取像素流的服务相关包：
-> *(UE4)* .\Samples\PixelStreaming\WebServers\get_ps_servers.bat  
-> *(UE5)* .\项目名\Samples\PixelStreaming\WebServers\get_ps_servers.bat
+#### UE4
 
+**[WARNING] 这里在后续更新文档时没有测试过，可能存在故障**  
 运行下述文件以安装信令服务器:  
-> *(UE4)* .\Samples\PixelStreaming\WebServers\SignallingWebServer\platform_scripts\cmd\setup.ps1  
-> *(UE5)* .\项目名\Samples\PixelStreaming\WebServers\SignallingWebServer\platform_scripts\cmd\setup.ps1  
+> *(UE4)* .\Samples\PixelStreaming\WebServers\SignallingWebServer\platform_scripts\cmd\setup.ps1
+
+#### UE5
+先获取像素流的服务相关包：
+> *(UE5)* .\项目名\Samples\PixelStreaming\WebServers\get_ps_servers.bat
+运行下述文件以安装信令服务器:  
+> *(UE5)* .\项目名\Samples\PixelStreaming\WebServers\SignallingWebServer\platform_scripts\cmd\setup.bat  
 
 安装完成后，可以调用与上述文件同文件夹中的```Start_SignallingServer.ps1```以启动像素流服务器。  
 为了方便后续调用并修改参数，建议编写powershell脚本打开该文件。在游戏启动程序同文件夹下新建文件 ```StartSignallingWebServer.ps1```，内容为上述文件路径，以UE4为例：  
