@@ -105,7 +105,8 @@ ProjectName.exe -PixelStreamingIP=127.0.0.1 -PixelStreamingPort=8888 -RenderOffs
 * **2.启动```StartGame.bat```**。  
 当未添加```-RenderOffscreen```参数时，会直接打开游戏窗口；当添加了```-RenderOffscreen```参数时，不会出现游戏运行窗口，但是打开任务管理器可以看见该程序占用GPU资源较高。  
 ![alt text](image-2.png)  
-即为游戏程序启动成功  
+即为游戏程序启动成功
+鼠标不显示时，可以参考[这里](## 4.1 鼠标不显示)
 
 * **3.网页访问**  
 
@@ -261,3 +262,11 @@ print("All servers and games started successfully.")
 ```
 
 </details>
+
+# 4 常见问题
+
+## 4.1 鼠标不显示
+
+如果显示画面中没有鼠标，鼠标拖动点击之类的交互不成功，则可以在网页端打开Control Scheme: Hovering Mouse
+<img width="1252" height="883" alt="image" src="https://github.com/user-attachments/assets/f4b75cda-1831-43de-aedd-19d7e94b9536" />
+
