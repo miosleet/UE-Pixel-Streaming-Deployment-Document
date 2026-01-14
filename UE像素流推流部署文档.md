@@ -117,12 +117,90 @@ ProjectName.exe -PixelStreamingIP=127.0.0.1 -PixelStreamingPort=8888 -RenderOffs
 
 ## 3.一主机对多用户
 
+一个脚本搞定
+```StartStreaming.ps1```
+``` ps1
+# ================== 可配置区域 ==================
+
+$InstanceCount = 3          # 想启动几个像素流实例
+$BaseHttpPort = 80
+$BaseStreamerPort = 8888
+$BaseSFUPort = 8889
+
+$UEExePath = ".\ProjectName.exe" # 修改工程名称
+$SignallingPs1 = ".\ProjectName\Samples\PixelStreaming\WebServers\SignallingWebServer\platform_scripts\cmd\Start_SignallingServer.ps1" # 修改工程名称
+
+$ResX = 1920
+$ResY = 1080
+
+$PidsFile = "PixelStreaming_PIDs.txt"
+
+# =================================================
+
+Write-Host "Starting Pixel Streaming Instances..."
+if (Test-Path $PidsFile) { Remove-Item $PidsFile }
+
+for ($i = 0; $i -lt $InstanceCount; $i++) {
+
+    $HttpPort = $BaseHttpPort + $i
+    $StreamerPort = $BaseStreamerPort + ($i * 2)
+    $SFUPort = $BaseSFUPort + ($i * 2)
+
+    Write-Host "Starting Signalling Server [$i]"
+    $sig = Start-Process powershell `
+        -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$SignallingPs1`" --HttpPort $HttpPort --StreamerPort $StreamerPort --SFUPort $SFUPort" `
+        -PassThru
+
+    $sig.Id | Out-File -Append $PidsFile
+
+    Start-Sleep -Seconds 3
+
+    Write-Host "Starting UE Game [$i]"
+    $ue = Start-Process $UEExePath `
+        -ArgumentList "-PixelStreamingIP=127.0.0.1 -PixelStreamingPort=$StreamerPort -RenderOffscreen -ForceRes -ResX=$ResX -ResY=$ResY" `
+        -PassThru
+
+    $ue.Id | Out-File -Append $PidsFile
+
+    Start-Sleep -Seconds 2
+}
+
+Write-Host ""
+Write-Host "All instances started."
+Write-Host "Press Enter to close all UE games..."
+Read-Host
+
+# ================== 统一关闭 ==================
+
+Write-Host ""
+Write-Host "Stopping all Pixel Streaming instances..."
+
+# ================= UE：按进程名关闭 =================
+
+$UEProcessName = "LinGangYangHuaLv_V2"
+
+Write-Host "Stopping UE processes..."
+Get-Process -Name $UEProcessName -ErrorAction SilentlyContinue | ForEach-Object {
+    Write-Host "Stopping UE PID $($_.Id)"
+    taskkill /PID $_.Id /T /F | Out-Null
+}
+
+Write-Host "All Pixel Streaming instances stopped."
+
+Write-Host "Press Enter to exit..."
+Read-Host # 脚本会在此处暂停，直到用户按下 Enter
+```
+
+
+<details>
+  <summary>这是之前写的，在UE4下，貌似有问题</summary> 
 **官方文档：<https://docs.unrealengine.com/4.27/zh-CN/SharingAndReleasing/PixelStreaming/Hosting/>，参看“配对时的多个完整堆栈”部分**  
 
 上面的基础测试环境，仅能支持1台渲染主机渲染1个画面，多用户同时访问时会显示同一个画面内容，并且同时接收用户输入，这是不合适的。实际使用时，需要只部署一台高图形性能的渲染主机，即可带动多个显示客户端，一般仅推荐一张4080级别的显卡带动最多3个客户端，下面以2个客户端为例。  
 
 ### 3.1.安装配对服务器MatchMaker  
 
+**UE5貌似不需要**
 MatchMaker服务器启动路径在：  
 > *(UE4)* .\Samples\PixelStreaming\WebServers\Matchmaker\run.bat  
 > *(UE4)* .\项目名\Samples\PixelStreaming\WebServers\Matchmaker\run.bat  
@@ -262,7 +340,7 @@ print("All servers and games started successfully.")
 ```
 
 </details>
-
+</details>
 # 4 常见问题
 
 ## 4.1 鼠标不显示
